@@ -78,7 +78,7 @@ export const MyntraData = {
     {
       id: 103,
       brand: "Roadster",
-      name: "Men Mauve Solid Hooded Sweatshirt",
+      name: "Men Mauve Hooded Sweatshirt",
       rating: "4.3",
       reviews: 1400,
       wishList: false,
