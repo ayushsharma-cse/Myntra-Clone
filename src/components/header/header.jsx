@@ -3,9 +3,12 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiHeart } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const cart = useSelector((state) => state.product.cart);
 
   return (
     <div className="myntra_header">
@@ -73,7 +76,7 @@ const Header = () => {
           </div>
           <div className="header_item" onClick={() => navigate("/bag")}>
             <IoBagOutline />
-            <span>Cart</span>
+            <span>Cart {cart.length}</span>
           </div>
         </div>
       </div>

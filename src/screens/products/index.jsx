@@ -1,7 +1,7 @@
 import "./products.css";
 
 import Filter from "../../pages/filter/index";
-import ProductCard from "../../pages/product_card/index";
+import ProductCard from "../../components/product_card/index";
 import { useSelector } from "react-redux"; // use selector is used to fetch the data from the redux store
 import { useState, useMemo } from "react";
 
