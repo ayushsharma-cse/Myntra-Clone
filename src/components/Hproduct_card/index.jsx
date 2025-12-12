@@ -1,6 +1,26 @@
 import "./hproduct_card.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setCart } from "../../Redux/Slice/product_slice";
 
 const HProductCard = ({ data, type }) => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.product.cart);
+
+  const handleRemoveItem = () => {
+    dispatch(setCart(cart.filter((item) => item.id !== data.id)));
+  };
+
+  const handleQty = (event) => {
+    let values = cart.map((item) => {
+      if (item.id === data.id) {
+        return { ...item, qty: event.target.value };
+      } else {
+        return item;
+      }
+    });
+    dispatch(setCart(values));
+  };
+
   return (
     <div className="h_product_container">
       <div className="h_product_image">
@@ -13,7 +33,7 @@ const HProductCard = ({ data, type }) => {
         </div>
         <div className="h_product_qty">
           {type === "cart" && ( // when the type is cart then only the dropdwon menu else not
-            <select value={data.qty}>
+            <select value={data.qty} onChange={handleQty}>
               <option value={1}>Qty.1</option>
               <option value={2}>Qty.2</option>
               <option value={3}>Qty.3</option>
@@ -38,7 +58,9 @@ const HProductCard = ({ data, type }) => {
           </p>
         </div>
       </div>
-      {type !== "order" && <div className="h_product_close"></div>}
+      {type !== "order" && (
+        <div className="h_product_close" onClick={handleRemoveItem}></div>
+      )}
     </div>
   );
 };

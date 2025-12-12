@@ -1,10 +1,17 @@
 import "./cart.css";
 import HProductCard from "../../components/Hproduct_card";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Empty from "../../components/empty section";
+import { setCart, setOrders } from "../../Redux/Slice/product_slice";
 
 const Carty = () => {
   const cart = useSelector((state) => state.product.cart);
+  const dispatch = useDispatch();
+
+  const handlePlaceOrder = () => {
+    dispatch(setOrders(cart));
+    dispatch(setCart([])); // emptying the cart then
+  };
 
   if (cart.length === 0) {
     return <Empty />;
@@ -36,7 +43,7 @@ const Carty = () => {
           <table>
             <tr>
               <td>Total MRP</td>
-              <td>Rs.0</td>
+              <td>{getTotalAmount(cart)}</td>
             </tr>
             <tr>
               <td>Platform Fee</td>
@@ -48,10 +55,10 @@ const Carty = () => {
             </tr>
             <tr className="total_amount">
               <td>Total Amount</td>
-              <td>Rs.0</td>
+              <td>{getTotalAmount(cart)}</td>
             </tr>
           </table>
-          <button>PLACE ORDER</button>
+          <button onClick={handlePlaceOrder}>PLACE ORDER</button>
         </div>
       </div>
     </div>
@@ -59,3 +66,10 @@ const Carty = () => {
 };
 
 export default Carty;
+
+function getTotalAmount(list) {
+  // see this
+  return list.reduce((a, b) => {
+    return a + parseInt(b.price) * parseInt(b.qty);
+  }, 0);
+}

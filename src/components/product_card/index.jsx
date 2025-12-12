@@ -1,11 +1,12 @@
 import "./product_card.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "../../Redux/Slice/product_slice";
+import { setCart, setProducts } from "../../Redux/Slice/product_slice";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.product.cart);
+  const products = useSelector((state) => state.product.products);
 
   const handleAddCart = () => {
     if (cart.length === 0) {
@@ -30,6 +31,17 @@ const ProductCard = ({ data }) => {
     }
   };
 
+  const handleWishlist = () => {
+    let values = products.map((item) => {
+      if (item.id === data.id) {
+        return { ...item, wishList: !item.wishList };
+      } else {
+        return item;
+      }
+    });
+    dispatch(setProducts(values));
+  };
+
   return (
     <div className="product_card">
       <div className="product_card_img">
@@ -45,6 +57,7 @@ const ProductCard = ({ data }) => {
           className={
             data.wishList ? "product_fill_heart" : "product_empty_heart"
           }
+          onClick={handleWishlist}
         ></div>
       </div>
 
